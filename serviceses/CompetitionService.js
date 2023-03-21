@@ -1,4 +1,4 @@
-import { client } from '../database.js'
+import client from '../database.js'
 
 await client.connect()
 
