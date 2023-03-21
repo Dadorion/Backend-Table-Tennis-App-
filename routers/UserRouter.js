@@ -3,6 +3,8 @@ import { Router } from "express"
 
 const userRouter = new Router()
 
-// userRouter.get('/users', UserController.getAll)
+userRouter.get('/', (req, res) => {
+   res.json({ mesage: 'all works' })
+})
 
 export default userRouter
