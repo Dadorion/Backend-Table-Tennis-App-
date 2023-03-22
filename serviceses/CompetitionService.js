@@ -1,12 +1,22 @@
 import client from '../database.js'
+import Query from '../queryBilder.js'
 
 await client.connect()
 
 class CompetitionService {
+   // async create(competition) {
+   //    const { fp_user_id, sp_user_id, date, tournament_id, location_id, winner } = competition
+
+   //    const newCompetition = await client.query('INSERT INTO competitions (fp_user_id, sp_user_id, date, tournament_id, location_id, winner) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [fp_user_id, sp_user_id, date, tournament_id, location_id, winner])
+
+   //    return newCompetition
+   // }
    async create(competition) {
       const { fp_user_id, sp_user_id, date, tournament_id, location_id, winner } = competition
 
-      const newCompetition = await client.query('INSERT INTO competitions (fp_user_id, sp_user_id, date, tournament_id, location_id, winner) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *', [fp_user_id, sp_user_id, date, tournament_id, location_id, winner])
+      const newCompetition = await client.query(
+         Query({ type: 'INSERT', table: 'competition', columns: ['fp_user_id', 'sp_user_id', 'date', 'tournament_id', 'location_id', 'winner'] }).qString,
+         [fp_user_id, sp_user_id, date, tournament_id, location_id, winner])
 
       return newCompetition
    }
