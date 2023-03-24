@@ -5,7 +5,7 @@ import userRouter from "./UserRouter.js"
 const router = new Router()
 
 router.use('/users', userRouter)
-router.use('/competition', competitionRouter)
+router.use('/competitions', competitionRouter)
 // router.use('/tournaments', (req, res) => { })
 // router.use('/games', (req, res) => { })
 

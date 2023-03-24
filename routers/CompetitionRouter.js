@@ -5,8 +5,8 @@ const competitionRouter = new Router()
 
 competitionRouter.get('/', CompetitionController.getAll)
 competitionRouter.get('/:id', CompetitionController.getOne)
-competitionRouter.get('/', CompetitionController.create)
-competitionRouter.get('/', CompetitionController.update)
-competitionRouter.get('/:id', CompetitionController.delete)
+competitionRouter.post('/', CompetitionController.create)
+competitionRouter.put('/', CompetitionController.update)
+competitionRouter.delete('/:id', CompetitionController.delete)
 
 export default competitionRouter

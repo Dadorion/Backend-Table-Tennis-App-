@@ -23,7 +23,7 @@ class CompetitionController {
    }
    async getOne(req, res) {
       try {
-         const { id } = req.params.id
+         const { id } = req.params
          if (!id) { res.status(400).json({ message: 'We need ID namber.' }) }
          const competition = await CompetitionService.getOne(id)
 
@@ -32,7 +32,7 @@ class CompetitionController {
             : res.status(400).json('We have no such competition')
       } catch (e) {
          res.status(500).json(e)
-         console.log(e);
+         console.log(e)
       }
    }
    async update(req, res) {
@@ -64,4 +64,4 @@ class CompetitionController {
    }
 }
 
-export default new CompetitionController  
+export default new CompetitionController   

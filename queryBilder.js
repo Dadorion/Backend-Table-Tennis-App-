@@ -1,57 +1,48 @@
 class Query {
-
-   constructor(options) {
-      const { table, col, filterCol } = options
-
+   insert(table, col) {
       let val = []
-      let filterVal = []
-      const filter = []
-      const data = []
-
       if (col) {
          for (let i = 0; i < col.length; i++) { val.push(`$${i + 1}`) }
       }
-      if (filterCol) {
-         for (let i = 0; i < filterCol.length; i++) { filterVal.push(`$${i + 1}`) }
+
+      const str = `INSERT INTO ${table} (${col}) VALUES (${val}) RETURNING *`
+
+      return str
+   }
+   selectAll(table) {
+      const str = `SELECT * FROM ${table} ORDER BY id DESC`
+
+      return str
+   }
+   selectID(table) {
+      const str = `SELECT * FROM ${table} WHERE id = $1`
+
+      return str
+   }
+   update(table, col) {
+      let val = []
+      for (let i = 0; i < col.length; i++) { val.push(`$${i + 1}`) }
+      const data = []
+      for (let i = 0; i < col.length; i++) {
+         data.push(`${col[i]} = ${val[i]}`)
       }
 
-      switch (options.type) {
-         case 'INSERT':
-            this.qString = `INSERT INTO ${table} (${col}) VALUES (${val}) RETURNING *`
-            break;
-         case 'SELECT ALL':
-            this.qString = `SELECT * FROM ${table} ORDER BY id DESC`
-            break;
-         case 'SELECT ID':
-            this.qString = `SELECT * FROM ${table} WHERE ${filterCol} = ${filterVal}`
-            break;
-         case 'UPDATE':
-            for (let i = 0; i < col.length; i++) {
-               data.push(`${col[i]} = ${val[i]}`)
-            }
-            for (let i = 0; i < filterCol.length; i++) {
-               filter.push(`${filterCol[i]} = ${col.length + 1}`)
-            }
+      const str = `UPDATE ${table} SET ${data} WHERE id = $${col.length + 1} RETURNING *`
 
-            this.qString = `UPDATE ${table} SET ${data} WHERE ${filter} RETURNING *`
-            break;
-         case 'DELETE':
+      return str
+   }
+   delete(table) {
+      const str = `DELETE FROM ${table} WHERE id = $1 RETURNING *`
 
-            for (let i = 0; i < filterCol.length; i++) {
-               filter.push(`${filterCol[i]} = ${col.length + 1}`)
-            }
-            this.qString = `DELETE FROM ${table} WHERE ${filter} RETURNING *`
-            break;
-         default:
-            break;
-      }
+      return str
    }
 }
 export default new Query()
 
 
-// console.log(new Query({ type: 'INSERT', table: 'table', col: ['fp_user_id', 'sp_user_id', 'date', 'tournament_id', 'location_id', 'winner'] }).qString)
-// console.log(new Query({ type: 'SELECT ALL', table: 'table', col: [] }).qString)
-// console.log(new Query({ type: 'SELECT ID', table: 'table', filterCol: ['id'] }).qString)
-// console.log(new Query({ type: 'UPDATE', table: 'table', col: ['fp_user_id', 'sp_user_id', 'date', 'tournament_id', 'location_id', 'winner'], filterCol: ['id'] }).qString)
-// console.log(new Query({ type: 'DELETE', table: 'table', col: ['fp_user_id', 'sp_user_id', 'date', 'tournament_id', 'location_id', 'winner'], filterCol: ['id'] }).qString)
+// console.log(new Query().insert('table', ['fp_user_id', 'sp_user_id', 'date', 'tournament_id', 'location_id', 'winner']))
+// console.log(new Query().selectAll('table'))
+// console.log(new Query().selectAll('table'))
+// console.log(new Query().selectID('table', 1))
+// console.log(new Query().update('table', ['fp_user_id', 'sp_user_id', 'date', 'tournament_id', 'location_id', 'winner'], 1))
+// console.log(new Query().delete('table'))
