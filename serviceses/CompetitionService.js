@@ -1,7 +1,7 @@
 import client from '../database.js'
 import Query from '../queryBilder.js'
 
-await client.connect()
+// await client.connect()
 
 class CompetitionService {
    // async create(competition) {
