@@ -11,11 +11,45 @@ class PlayerController {
          console.log(e)
       }
    }
+   // async getAll(req, res) {
+   //    try {
+   //       const allPlayers = await PlayerService.getAll()
+   //       allPlayers
+   //          ? res.status(200).json(allPlayers)
+   //          : res.status(204).json('This table is empty')
+   //    } catch (e) {
+   //       res.status(500).json(e)
+   //    }
+   // }
    async getAll(req, res) {
       try {
-         const allPlayer = await PlayerService.getAll()
-         allPlayer
-            ? res.status(200).json(allPlayer)
+         const allPlayers = await PlayerService.getAll()
+
+
+
+
+
+         const allPlayersTop = allPlayers.map((player) => {
+            const x = []
+            for (let i = 0; i < allPlayers.length; i++) {
+               if (player.city === allPlayers[i].city) {
+                  x.push(allPlayers[i])
+               }
+            }
+
+            let newPlayer = { ...player, ratingPlace: x.findIndex(p => p.id === player.id) + 1 }
+            console.log(newPlayer)
+            return newPlayer
+
+         })
+
+
+
+
+
+
+         allPlayersTop
+            ? res.status(200).json(allPlayersTop)
             : res.status(204).json('This table is empty')
       } catch (e) {
          res.status(500).json(e)

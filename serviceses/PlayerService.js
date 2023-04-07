@@ -12,9 +12,13 @@ class PlayerService {
 
       return newPlayer
    }
+   // async getAll() {
+   //    const q = Query.selectAll('players')
+   //    const answer = await client.query(q)
+   //    return answer.rows
+   // }
    async getAll() {
-      const q = Query.selectAll('players')
-      const answer = await client.query(q)
+      const answer = await client.query('SELECT players.id, name, surname, birthday, status, city, max, min, current FROM players JOIN rating_club ON players.id = rating_club.player_id ORDER BY current DESC')
       return answer.rows
    }
    async getOne(id) {

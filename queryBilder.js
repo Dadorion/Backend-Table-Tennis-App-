@@ -38,11 +38,3 @@ class Query {
    }
 }
 export default new Query()
-
-
-// console.log(new Query().insert('table', ['fp_user_id', 'sp_user_id', 'date', 'tournament_id', 'location_id', 'winner']))
-// console.log(new Query().selectAll('table'))
-// console.log(new Query().selectAll('table'))
-// console.log(new Query().selectID('table', 1))
-// console.log(new Query().update('table', ['fp_user_id', 'sp_user_id', 'date', 'tournament_id', 'location_id', 'winner']))
-// console.log(new Query().delete('table'))

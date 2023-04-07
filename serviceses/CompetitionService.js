@@ -19,9 +19,13 @@ class CompetitionService {
 
       return newCompetition
    }
+   // async getAll() {
+   //    const q = Query.selectAll('competitions')
+   //    const answer = await client.query(q)
+   //    return answer.rows
+   // }
    async getAll() {
-      const q = Query.selectAll('competitions')
-      const answer = await client.query(q)
+      const answer = await client.query('SELECT players_competitions.id as id, competitions.id as competition_id, date, name, surname, score FROM players_competitions JOIN players ON players.id = player_id JOIN competitions ON competitions.id = competition_id ORDER BY id DESC LIMIT 10')
       return answer.rows
    }
    async getOne(id) {
