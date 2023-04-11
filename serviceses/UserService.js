@@ -1,5 +1,5 @@
 import client from '../database.js'
-import Query from '../queryBilder.js'
+import Query from '../queryBuilder.js'
 
 await client.connect()
 
