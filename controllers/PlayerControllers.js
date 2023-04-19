@@ -14,6 +14,7 @@ class PlayerController {
    async getAll(req, res) {
       try {
          const allPlayers = await PlayerService.getAll()
+         if (allPlayers.length < 1) return res.status(500).json('sevrice not sent any answer')
 
          const allPlayersTop = allPlayers.map((player) => {
             const x = []
