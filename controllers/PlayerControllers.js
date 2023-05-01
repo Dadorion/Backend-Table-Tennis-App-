@@ -80,4 +80,4 @@ class PlayerController {
    }
 }
 
-export default new PlayerController   
+export default new PlayerController

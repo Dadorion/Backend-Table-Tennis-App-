@@ -64,4 +64,4 @@ class TournamentController {
    }
 }
 
-export default new TournamentController   
+export default new TournamentController

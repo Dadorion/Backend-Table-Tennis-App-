@@ -15,4 +15,4 @@ router.use('/notifications', notificationRouter)
 // router.use('/tournaments', (req, res) => { })
 // router.use('/games', (req, res) => { })
 
-export default router  
+export default router

@@ -9,4 +9,4 @@ tournamentRouter.post('/', TournamentController.create)
 tournamentRouter.put('/', TournamentController.update)
 tournamentRouter.delete('/:id', TournamentController.delete)
 
-export default tournamentRouter 
+export default tournamentRouter

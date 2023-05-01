@@ -64,4 +64,4 @@ class CompetitionController {
    }
 }
 
-export default new CompetitionController   
+export default new CompetitionController
