@@ -19,7 +19,7 @@ jobs:
     - run: set -eu
       # Setup SSHKEY
     - run: mkdir "$HOME/.ssh"
-    - run: echo "${{ secret.SSHKEY }}" > "$HOME/.ssh/SSHKEY"
+    - run: echo "${{ secrets.SSHKEY }}" > "$HOME/.ssh/SSHKEY"
     - run: chmod 600 "$HOME/.ssh/SSHKEY"
     - run: npm ci
       # Build
