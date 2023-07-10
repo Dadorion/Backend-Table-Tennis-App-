@@ -8,7 +8,6 @@ class PlayerController {
 
       } catch (e) {
          res.status(500).json(e)
-         console.log(e)
       }
    }
    async getAll(req, res) {
@@ -49,7 +48,6 @@ class PlayerController {
             : res.status(400).json('We have no such player')
       } catch (e) {
          res.status(500).json(e)
-         console.log(e)
       }
    }
    async update(req, res) {

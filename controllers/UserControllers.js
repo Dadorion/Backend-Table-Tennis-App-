@@ -59,7 +59,6 @@ class UserController {
             : res.status(400).json('We have no such user')
       } catch (e) {
          res.status(500).json(e)
-         // console.log(e)
       }
    }
 }
