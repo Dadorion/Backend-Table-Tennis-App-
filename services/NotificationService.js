@@ -1,5 +1,5 @@
 import client from '../database.js'
-import Query from '../queryBuilder.js'
+import Query from '../dataBuilders/queryBuilder.js'
 
 // await client.connect()
 

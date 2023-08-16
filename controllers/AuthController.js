@@ -1,4 +1,4 @@
-import AuthService from '../serviceses/AuthService.js'
+import AuthService from '../services/AuthService.js'
 import bcrypt from 'bcryptjs'
 import { validationResult } from 'express-validator'
 import generateAccessToken from '../config/generateToken.js'

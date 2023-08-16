@@ -9,6 +9,16 @@ const config = {
    database: process.env.DB_DB || "ttStHoper"
 }
 const pool = new Pool(config)
+pool.on('connect', connection => {
+   console.log('||||||||||||||||||||||||||||')
+   console.log('----------------------------')
+   console.log('new connection to postgress')
+   console.log(pool.idleCount, 'pool.idleCount')
+   console.log(pool.totalCount, 'pool.totalCount')
+   console.log(pool.waitingCount, 'pool.waitingCount')
+   console.log('----------------------------')
+   console.log('||||||||||||||||||||||||||||')
+})
 export default pool
 
 

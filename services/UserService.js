@@ -1,7 +1,7 @@
 import pool from '../database.js'
-import Query from '../queryBuilder.js'
+import Query from '../dataBuilders/queryBuilder.js'
 
-class MatchService {
+class UserService {
    // async create(user) {
    //    const { name, surname, birthday, status, city } = user
 
@@ -11,7 +11,7 @@ class MatchService {
    //    return newPlayer
    // }
    async getAll() {
-      const q = Query.selectAll('matches')
+      const q = Query.selectAll('users')
       const answer = await pool.query(q)
       return answer.rows
    }
@@ -39,4 +39,4 @@ class MatchService {
    // }
 }
 
-export default new MatchService()
+export default new UserService()

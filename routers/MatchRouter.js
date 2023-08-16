@@ -19,9 +19,9 @@ __ по сути инфа о новой встрече __
 -далее будут указываться счета партий. но пришиваться в этой встрече
 */
 
-matchRouter.get('/', MatchController.getAll)
+matchRouter.post('/new', MatchController.create)
+matchRouter.post('/', MatchController.getAll)
 // matchRouter.get('/:id', MatchController.getOne)
-// matchRouter.post('/', MatchController.create)
 // matchRouter.post('/', MatchController.update)
 // matchRouter.get('/:id', MatchController.delete)
 

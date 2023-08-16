@@ -6,7 +6,7 @@ const generateAccessToken = (id) => {
       id,
       // roles
    }
-   return jwt.sign(payload, config.secret, { expiresIn: "24h" })
+   return jwt.sign(payload, config.secret, { expiresIn: "2400h" })
 }
 
 export default generateAccessToken

@@ -1,5 +1,5 @@
 import pool from '../database.js'
-import Query from '../queryBuilder.js'
+import Query from '../dataBuilders/queryBuilder.js'
 
 // await pool.connect()
 
@@ -18,8 +18,28 @@ class PlayerService {
    //    return answer.rows
    // }
    async getAll() {
-      const answer = await pool.query('SELECT players.id, name, surname, birthday, status, city, max, min, current FROM players JOIN rating_club ON players.id = rating_club.player_id ORDER BY current DESC')
+      const answer = await pool.query('SELECT id, name, surname, birthday, status, city FROM players  ORDER BY id DESC LIMIT 10')
       return answer.rows
+   }
+   async getAllPredictive(findName) {
+      const q = Query.selectAllPredictive('players', ["id", "name", "surname", "birthday", "status", "city"])
+      const answer = await pool.query(q, [findName])
+      let result =
+      {
+         "pagination":
+         {
+            "playersCount": answer.rows.length,
+            // "totalMatches": totalMatches,
+            // "totalPages": Math.round(totalMatches / matchesPerPage),
+            // "currentPage": page,
+            // "perPage": matchesPerPage,
+            // "maxPerPage": 100,
+         },
+
+         "body": [...answer.rows]
+      }
+
+      return result
    }
    async getOne(id) {
       if (!id) { throw new Error('не указан ID') }

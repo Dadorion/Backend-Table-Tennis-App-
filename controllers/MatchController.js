@@ -1,24 +1,27 @@
-import MatchService from '../serviceses/MatchService.js'
+import MatchService from '../services/MatchService.js'
 
 class MatchController {
-   // async create(req, res) {
-   //    try {
-   //       const newUser = await MatchService.create(req.body)
-   //       res.json(newUser.rows[0])
+   async create(req, res) {
+      const match = req.body
+      try {
+         const newMatch = await MatchService.create(match)
+         res.json(newMatch)
 
-   //    } catch (e) {
-   //       res.status(500).json(e)
-   //       console.log(e)
-   //    }
-   // }
+      } catch (e) {
+         res.status(500).json(e)
+         console.log(e)
+      }
+   }
    async getAll(req, res) {
+
       try {
          const allMatches = await MatchService.getAll()
          allMatches
             ? res.status(200).json(allMatches)
-            : res.status(204).json('This table is empty')
+            : res.status(204).json('No result')
       } catch (e) {
          res.status(500).json(e)
+         console.log(e)
       }
    }
    async getMatch(req, res) {

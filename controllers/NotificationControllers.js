@@ -1,4 +1,4 @@
-import NotificationService from '../serviceses/NotificationService.js'
+import NotificationService from '../services/NotificationService.js'
 
 class NotificationController {
    async create(req, res) {
