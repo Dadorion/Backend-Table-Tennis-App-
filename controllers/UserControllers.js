@@ -12,8 +12,10 @@ class UserController {
       }
    }
    async getAll(req, res) {
+      const page = parseInt(req.query.page) || 1
+      const limit = parseInt(req.query.limit) || 10
       try {
-         const allUsers = await UserService.getAll()
+         const allUsers = await UserService.getAll(page, limit)
          allUsers
             ? res.status(200).json(allUsers)
             : res.status(204).json('This table is empty')

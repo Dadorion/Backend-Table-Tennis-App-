@@ -1,8 +1,6 @@
 import client from '../database.js'
 import Query from '../dataBuilders/queryBuilder.js'
 
-// await client.connect()
-
 class NotificationService {
    async create(notification) {
       const { name, surname, birthday, status, city } = notification

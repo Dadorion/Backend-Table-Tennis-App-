@@ -10,10 +10,21 @@ class UserService {
 
    //    return newPlayer
    // }
-   async getAll() {
-      const q = Query.selectAll('users')
-      const answer = await pool.query(q)
-      return answer.rows
+   async getAll(page, limit) {
+      const offset = (page - 1) * limit;
+      const q = Query.selectAll('users', '*', 'DESC')
+      const answer = await pool.query(q, [limit, offset])
+      let result =
+      {
+         "pagination":
+         {
+            "usersCount": answer.rows.length
+         },
+
+         "body": [...answer.rows]
+      }
+
+      return result
    }
    // async getOne(id) {
    //    if (!id) { throw new Error('не указан ID') }

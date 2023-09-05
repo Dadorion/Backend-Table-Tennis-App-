@@ -1,6 +1,12 @@
 import PlayerService from '../services/PlayerService.js'
 
 class PlayerController {
+   checkId(id) {
+      if (!id) {
+         throw new Error('We need an ID number.');
+      }
+   }
+
    async create(req, res) {
       try {
          const newPlayer = await PlayerService.create(req.body)
@@ -13,8 +19,11 @@ class PlayerController {
    async getAll(req, res) {
       try {
          const allPlayers = await PlayerService.getAll()
-         // console.log(allPlayers)
-         if (allPlayers.length < 1) return res.status(500).json('sevrice not sent any answer')
+
+         if (allPlayers.length < 1) {
+            return res.status(200).json([])
+         }
+
          const allPlayersTop = allPlayers.map((player) => {
             const x = []
             for (let i = 0; i < allPlayers.length; i++) {
@@ -52,7 +61,7 @@ class PlayerController {
    async getOne(req, res) {
       try {
          const { id } = req.params
-         if (!id) { res.status(400).json({ message: 'We need ID namber.' }) }
+         this.checkId(id)
          const player = await PlayerService.getOne(id)
 
          player
@@ -65,7 +74,7 @@ class PlayerController {
    async update(req, res) {
       try {
          const { id } = req.body
-         if (!id) { res.status(400).json({ message: 'We need ID namber.' }) }
+         this.checkId(id)
 
          const updetedPlayer = await PlayerService.update(req.body)
 
@@ -77,7 +86,7 @@ class PlayerController {
    async delete(req, res) {
       try {
          const { id } = req.params
-         if (!id) { res.status(400).json({ message: 'We need ID namber.' }) }
+         this.checkId(id)
 
          const deletedPlayer = await PlayerService.delete(id)
 

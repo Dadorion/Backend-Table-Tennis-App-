@@ -4,3 +4,6 @@
 /node_modules
 /sql
 /filesbuilder
+/__tests__
+*.code-workspace
+/dataBuilders/secretKeyGeneration.js

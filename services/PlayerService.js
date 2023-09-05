@@ -1,8 +1,6 @@
 import pool from '../database.js'
 import Query from '../dataBuilders/queryBuilder.js'
 
-// await pool.connect()
-
 class PlayerService {
    async create(player) {
       const { name, surname, birthday, status, city } = player

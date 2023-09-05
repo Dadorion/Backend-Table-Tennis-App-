@@ -7,9 +7,14 @@ class Query {
 
       return `INSERT INTO ${table} (${col}) VALUES (${val}) RETURNING *`
    }
-   selectAll(table, arrStr) {
-      arrStr.length == 0 ? arrStr.push('*') : arrStr
-      return `SELECT ${arrStr} FROM ${table} ORDER BY id DESC`
+   selectAll(table, arrStr, direction) {
+      let collumns, way
+      !arrStr ? collumns = '*' : collumns = arrStr
+      !direction ? way = 'ASC' : way = direction
+
+
+      // return `SELECT ${collumns} FROM ${table} ORDER BY id ${way}`
+      return `SELECT ${collumns} FROM ${table} ORDER BY id ${way} LIMIT $1 OFFSET $2`
    }
    selectAllPredictive(table, arrStr) {
       arrStr.length == 0 ? arrStr.push('*') : arrStr

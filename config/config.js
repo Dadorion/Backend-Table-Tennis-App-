@@ -1,5 +1,6 @@
 const config = {
-   secret: "SECRET_KEY_RANDOM" // FIXME поменять на реальный не простой ключ
+   // secret: "SECRET_KEY_RANDOM"
+   secret: process.env.JWT_SECRET_KEY
 }
 
 export default config

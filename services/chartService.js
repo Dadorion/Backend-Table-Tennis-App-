@@ -1,8 +1,6 @@
 import pool from '../database.js'
 import Query from '../dataBuilders/queryBilder.js'
 
-await pool.connect()
-
 class CompetitionService {
    // async create(competition) {
    //    const { fp_user_id, sp_user_id, date, tournament_id, location_id, winner } = competition

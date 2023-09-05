@@ -3,7 +3,7 @@ import AuthController from "../controllers/AuthController.js"
 import { check } from "express-validator"
 
 const routerAuth = new Router()
-// [ ] TODO что-то надо решить на счет восстановления пароля, если пользователь его забыл
+// TODO что-то надо решить на счет восстановления пароля, если пользователь его забыл
 
 const today = new Date;
 

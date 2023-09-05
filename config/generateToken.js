@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken'
 import config from './config.js'
 
-const generateAccessToken = (id) => {
+const generateAccessToken = (id, role) => {
    const payload = {
       id,
-      // roles
+      // role
    }
    return jwt.sign(payload, config.secret, { expiresIn: "2400h" })
 }

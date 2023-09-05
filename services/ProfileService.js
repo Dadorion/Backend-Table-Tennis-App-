@@ -1,13 +1,10 @@
 import pool from '../database.js'
 
-await pool.connect()
-
 class ProfileService {
    async getOne(id) {
 
       if (!id) { throw new Error('не указан ID в ссылке после /') }
-      // FIXME не ловит ошибку. выдает ошибку с верхнего уровня в браузере
-      // скорее всего это потому, что на данный момент у меня не было эндпойнта с /(пусто)
+
       const profileIsExist = await pool.query('SELECT id FROM players WHERE id = $1', [id])
 
       if (profileIsExist.rows.length == 0) return
