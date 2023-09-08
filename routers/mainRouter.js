@@ -19,6 +19,9 @@ router.use('/players', authMiddleware, playerRouter) // написать все
 router.use('/profile', authMiddleware, profileRouter) // ~ok
 router.use('/stats', authMiddleware, statsRouter) // ~ok
 
+// TODO Вся ветка players работает никак
+// TODO Надо пререосмыслить ее полностью
+
 
 // Endpointes in development
 // router.use('/notifications', authMiddleware, notificationRouter) // потом

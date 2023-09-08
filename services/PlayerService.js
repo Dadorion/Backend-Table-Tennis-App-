@@ -16,8 +16,18 @@ class PlayerService {
    //    return answer.rows
    // }
    async getAll() {
-      const answer = await pool.query('SELECT id, name, surname, birthday, status, city FROM players  ORDER BY id DESC LIMIT 10')
-      return answer.rows
+      const answer = await pool.query('SELECT id, name, surname, birthday, status, city FROM players ORDER BY id DESC')
+      let result =
+      {
+         "pagination":
+         {
+            "playersCount": answer.rows.length
+         },
+
+         "body": [...answer.rows]
+      }
+
+      return result
    }
    async getAllPredictive(findName) {
       const q = Query.selectAllPredictive('players', ["id", "name", "surname", "birthday", "status", "city"])
@@ -26,12 +36,7 @@ class PlayerService {
       {
          "pagination":
          {
-            "playersCount": answer.rows.length,
-            // "totalMatches": totalMatches,
-            // "totalPages": Math.round(totalMatches / matchesPerPage),
-            // "currentPage": page,
-            // "perPage": matchesPerPage,
-            // "maxPerPage": 100,
+            "playersCount": answer.rows.length
          },
 
          "body": [...answer.rows]

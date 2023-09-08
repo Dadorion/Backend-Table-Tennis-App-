@@ -3,7 +3,7 @@ import PlayerService from '../services/PlayerService.js'
 class PlayerController {
    checkId(id) {
       if (!id) {
-         throw new Error('We need an ID number.');
+         throw new Error('We need an ID number.')
       }
    }
 
@@ -18,29 +18,24 @@ class PlayerController {
    }
    async getAll(req, res) {
       try {
-         const allPlayers = await PlayerService.getAll()
+         const answer = await PlayerService.getAll()
+         const allPlayers = answer.body
+         const paginationInfo = answer.pagination
 
          if (allPlayers.length < 1) {
-            return res.status(200).json([])
+            return res.status(204).json('This table is empty')
          }
 
          const allPlayersTop = allPlayers.map((player) => {
-            const x = []
-            for (let i = 0; i < allPlayers.length; i++) {
-
-               if (player.city !== allPlayers[i].city) return
-               x.push(allPlayers[i])
-
-            }
-
-            let ratPlayer = { ...player, ratingPlace: x.findIndex(p => p.id === player.id) + 1 }
-            return ratPlayer
-
+            const filteredPlayers = allPlayers.filter((p) => p.city !== player.city)
+            const ratingPlace = filteredPlayers.findIndex((p) => p.id === player.id) + 1
+            return { ...player, ratingPlace }
          })
+         // FIXME топ игроков вообще не работает. мы пытаемся фильтровать не понятно что не понятно по каким условиям и не понятно зачем
+         // по идее надо фильтровать по количеству побед или по проценту побед.
+         const apt = { pagination: paginationInfo, body: allPlayersTop }
 
-         allPlayersTop
-            ? res.status(200).json(allPlayersTop)
-            : res.status(204).json('This table is empty')
+         res.status(200).json(apt)
       } catch (e) {
          res.status(500).json(e)
       }
