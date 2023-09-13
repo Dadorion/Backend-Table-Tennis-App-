@@ -26,7 +26,6 @@ class ProfileService {
          if (matches[i]) wins += 1
       }
       let winsPersent = (wins / matches.length * 100).toFixed(2)
-      // FIXME возможно лучшим решением будет округлять до целых значений
       winsPersent != 'NaN' ? winsPersent : winsPersent = 'пока нет побед'
 
       let grade = 'не оценен'
