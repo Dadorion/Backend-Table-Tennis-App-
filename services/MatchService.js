@@ -9,7 +9,6 @@ class MatchService {
 
       const qMatch = Query.insert('matches', ['is_important', 'date', 'location_id', 'first_player'])
       const newMatch = await pool.query(qMatch, [is_important, date, location_id, fPlayer])
-      // console.log(newMatch.rows[0])
 
       const qPlayersMatches = Query.insert('players_matches', ['player_id', 'match_id'])
       const qGame = Query.insert('games', ['fp_score', 'sp_score', 'match_id'])

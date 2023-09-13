@@ -12,8 +12,6 @@ class Query {
       !arrStr ? collumns = '*' : collumns = arrStr
       !direction ? way = 'ASC' : way = direction
 
-      // FIXME почистить альтернативный код
-      // return `SELECT ${collumns} FROM ${table} ORDER BY id ${way}`
       return `SELECT ${collumns} FROM ${table} ORDER BY id ${way} LIMIT $1 OFFSET $2`
    }
    selectAllPredictive(table, arrStr) {

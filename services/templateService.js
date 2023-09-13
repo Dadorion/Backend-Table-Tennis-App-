@@ -20,7 +20,6 @@ class CompetitionService {
    }
    // async getAll() {
    //    const answer = await pool.query('SELECT * FROM competitions ORDER BY id DESC')
-   //    console.log(answer.rows)
    //    return answer.rows
    // }
    async getAll() {

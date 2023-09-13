@@ -10,11 +10,6 @@ class PlayerService {
 
       return newPlayer
    }
-   // async getAll() {
-   //    const q = Query.selectAll('players')
-   //    const answer = await pool.query(q)
-   //    return answer.rows
-   // }
    async getAll() {
       const answer = await pool.query('SELECT id, name, surname, birthday, status, city FROM players ORDER BY id DESC')
       let result =

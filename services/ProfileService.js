@@ -16,7 +16,6 @@ class ProfileService {
       const answerInfo = await pool.query('SELECT players.id as id, name, surname, status, city, EXTRACT( YEAR FROM birthday) AS b_Year, base, forhand_pad, backhand_pad FROM players WHERE players.id = $1', [id])
       // const answerRating = await pool.query('SELECT players.id as id, max as r_max, min as r_min, current as r_current, delta as r_delta, timestamp FROM  players  JOIN rating_club ON players.id = rating_club.player_id  JOIN rating_flow ON players.id = rating_flow.player_id WHERE players.id = $1 ORDER BY timestamp ASC', [id])
       const answerMatches = await pool.query('SELECT matches.id, games.fp_score,games.sp_score FROM matches JOIN games ON matches.id = games.match_id WHERE matches.first_player = $1', [id])
-      // console.log(answerMatches.rows)
 
       const matches = answerMatches.rows.map(match => {
          return match.fp_score > match.sp_score

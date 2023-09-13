@@ -5,8 +5,8 @@ import mainRouter from './routers/mainRouter.js'
 import authRouter from './routers/authRouter.js'
 import getPort from 'get-port'
 
-// const isTest = true
-const isTest = false
+const isTest = true
+// const isTest = false
 
 let PORT
 if (isTest) { PORT = await getPort() }

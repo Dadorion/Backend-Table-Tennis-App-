@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "ava",
+    "test:watch": "ava --watch",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
