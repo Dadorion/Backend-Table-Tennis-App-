@@ -4,7 +4,13 @@ class UserController {
    async create(req, res) {
       try {
          const newUser = await UserService.create(req.body)
-         res.json(newUser.rows[0])
+         let newUserAnswer = {}
+         for (const key in newUser.rows[0]) {
+            if (key.indexOf('password')) {
+               newUserAnswer[key] = newUser.rows[0][key]
+            }
+         }
+         res.json(newUserAnswer)
 
       } catch (e) {
          res.status(500).json(e)

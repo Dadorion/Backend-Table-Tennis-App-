@@ -2,14 +2,15 @@ import pool from '../database.js'
 import Query from '../dataBuilders/queryBuilder.js'
 
 class UserService {
-   // async create(user) {
-   //    const { name, surname, birthday, status, city } = user
+   async create(user) {
+      console.log(user)
+      const { name, surname, birthday, status, city } = user
 
-   //    const q = Query.insert('players', ['name', 'surname', 'birthday', 'status', 'city'])
-   //    const newPlayer = await pool.query(q, [name, surname, birthday, status, city])
+      const q = Query.insert('players', ['name', 'surname', 'birthday', 'status', 'city'])
+      const newPlayer = await pool.query(q, [name, surname, birthday, status, city])
 
-   //    return newPlayer
-   // }
+      return newPlayer
+   }
    async getAll(page, limit) {
       const offset = (page - 1) * limit;
       const q = Query.selectAll('users', '*', 'DESC')

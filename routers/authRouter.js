@@ -11,8 +11,8 @@ routerAuth.post
    (
       '/registration',
       [
-         check('password_1', "Пароль должен быть больше 4 и меньше 10 символов").trim().isLength({ min: 4, max: 10 }),
-         check('password_2', "Пароль должен быть больше 4 и меньше 10 символов").trim().isLength({ min: 4, max: 10 }),
+         check('password_1', "Пароль должен быть больше 10 и меньше 4 символов").trim().isLength({ min: 4, max: 10 }),
+         check('password_2', "Пароль должен быть больше 10 и меньше 4 символов").trim().isLength({ min: 4, max: 10 }),
          check('email', "Введите корректный E-mail").trim().isEmail(),
          check('name', "Имя должно быть длинее 3 и короче 15 символов").trim().isLength({ min: 3, max: 15 }),
          check('surname', "Фамилия должна быть длинее 3 и короче 20 символов").trim().isLength({ min: 3, max: 20 }),

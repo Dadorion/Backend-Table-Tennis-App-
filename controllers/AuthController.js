@@ -8,7 +8,7 @@ class AuthController {
       try {
          const errors = validationResult(req)
          if (!errors.isEmpty()) {
-            return res.status(400).json({ message: "Ошибка при регистрации", errors: errors.array() })
+            return res.status(400).json({ message: "Полученные данные не прошли валидацию на сервере", errors: errors.array() })
          }
 
          const { password_1, password_2, email, name, surname, birthday, city } = req.body
@@ -22,7 +22,7 @@ class AuthController {
             return res.status(400).json({ message: "Ошибка в подтверждении пароля" })
          }
 
-         const saltRounds = 10 // количество раундов 
+         const saltRounds = 10 // количество раундов
          const hashPassword = await bcrypt.hash(password_1, saltRounds)
 
          const user = await AuthService.addUser(email, name, surname, birthday, city, hashPassword)
