@@ -1,4 +1,4 @@
-import pool from '../database.js'
+import pool from '../../database.js'
 
 export default async function checkUserRoleMiddleware(req, res, next) {
    const allowedRoles = ['admin']

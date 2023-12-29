@@ -57,16 +57,18 @@ class PlayerController {
 
    async getOne(req, res) {
       try {
+         console.log(req);
          const { id } = req.params;
          this.checkId(id);
          const player = await PlayerService.getOne(id);
-
+         
          if (player) {
             res.status(200).json(player);
          } else {
             res.status(400).json('We have no such player');
          }
       } catch (e) {
+         console.log("Ошибка");
          res.status(500).json({ error: e.message });
       }
    }

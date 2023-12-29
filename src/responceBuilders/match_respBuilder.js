@@ -10,6 +10,7 @@ export default function requestsBuilder(sourceMatches) {
             date: match.date,
             fPlayerId: match.author,
             fPlayerName: match.name,
+            
             games: [
                {
                   game: 1,

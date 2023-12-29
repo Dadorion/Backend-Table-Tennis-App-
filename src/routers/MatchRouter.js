@@ -21,6 +21,7 @@ __ по сути инфа о новой встрече __
 
 matchRouter.post('/new', MatchController.create)
 matchRouter.post('/', MatchController.getAll)
+matchRouter.get('/:id', MatchController.getPlayerMatches)
 // matchRouter.get('/:id', MatchController.getOne)
 // matchRouter.post('/', MatchController.update)
 // matchRouter.get('/:id', MatchController.delete)

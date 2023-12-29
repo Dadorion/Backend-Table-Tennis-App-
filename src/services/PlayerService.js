@@ -1,4 +1,4 @@
-import pool from '../database.js'
+import pool from '../../database.js'
 import Query from '../dataBuilders/queryBuilder.js'
 
 class PlayerService {
@@ -11,7 +11,7 @@ class PlayerService {
       return newPlayer
    }
    async getAll() {
-      const answer = await pool.query('SELECT id, name, surname, birthday, status, city FROM players ORDER BY id DESC')
+      const answer = await pool.query('SELECT players.id, players.name, surname, birthday, status, cities.name as city FROM players JOIN cities ON cities.id = players.city_id ORDER BY id DESC')
       let result =
       {
          "pagination":
