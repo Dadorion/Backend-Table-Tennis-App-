@@ -156,10 +156,13 @@ class ProfileService {
       throw new Error("не указан ID");
     }
 
-    const {name, surname, base, forhand_pad, backhand_pad} = newProfileData
+    const { name, surname, base, forhand_pad, backhand_pad } = newProfileData;
 
-    const answerInfo = await pool.query(`UPDATE players SET (name, surname, base, forhand_pad, backhand_pad) = ($2, $3, $4, $5, $6)
-    WHERE id = $1 RETURNING *`, [id, name, surname, base, forhand_pad, backhand_pad])
+    const answerInfo = await pool.query(
+      `UPDATE players SET (name, surname, base, forhand_pad, backhand_pad) = ($2, $3, $4, $5, $6)
+    WHERE id = $1 RETURNING *`,
+      [id, name, surname, base, forhand_pad, backhand_pad]
+    );
 
     return { code: 0, ...answerInfo.rows[0] };
   }
@@ -168,8 +171,11 @@ class ProfileService {
       throw new Error("не указан ID");
     }
 
-    const answerInfo = await pool.query(`UPDATE players SET status = $2
-    WHERE id = $1 RETURNING *`, [id, statusText])
+    const answerInfo = await pool.query(
+      `UPDATE players SET status = $2
+    WHERE id = $1 RETURNING *`,
+      [id, statusText]
+    );
 
     return { code: 0, ...answerInfo.rows[0] };
   }
@@ -177,8 +183,11 @@ class ProfileService {
     if (!id) {
       throw new Error("не указан ID");
     }
-    const answerInfo = await pool.query(`UPDATE players SET photo_path = $2
-    WHERE id = $1 RETURNING *`, [id, filePath])
+    const answerInfo = await pool.query(
+      `UPDATE players SET photo_path = $2
+    WHERE id = $1 RETURNING *`,
+      [id, filePath]
+    );
 
     return { code: 0, ...answerInfo.rows[0] };
   }
