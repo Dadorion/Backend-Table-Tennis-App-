@@ -91,6 +91,22 @@ class PlayerService {
 
     return result;
   }
+  async getAllWithFilter(filter){
+    const players = await pool.query(
+      `
+      SELECT
+        p.id,
+        p.name,
+        p.surname,
+        p.photo_path
+      FROM players AS p
+      WHERE name ILIKE $1 OR surname ILIKE $1
+      ORDER BY id ASC
+    `,
+      [findName]
+    );
+    return players.rows
+  }
   async getAllPredictive(findName) {
     const players = await pool.query(
       `

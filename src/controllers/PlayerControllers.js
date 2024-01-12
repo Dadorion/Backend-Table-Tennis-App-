@@ -43,6 +43,18 @@ class PlayerController {
     }
   }
 
+  async getAllWithFilter(req, res) {
+    try {
+      const { filter } = req.body;
+
+      
+      const allPlayers = await PlayerService.getAllWithFilter(filter);
+
+      res.status(200).json(allPlayers);
+    } catch (e) {
+      res.status(500).json({ error: { where: "controller > getAllWithFilter", message: e.message } });
+    }
+  }
   async getAllPredictive(req, res) {
     try {
       const { name } = req.body;
@@ -52,7 +64,6 @@ class PlayerController {
 
       const findName = `${name}%`;
       const allPlayers = await PlayerService.getAllPredictive(findName);
-      console.log(allPlayers);
 
       res.status(200).json(allPlayers);
     } catch (e) {
