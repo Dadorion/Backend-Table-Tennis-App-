@@ -65,6 +65,55 @@ class AuthController {
       });
     }
   }
+  async updatePassword(req, res) {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({
+          message: "Полученные данные не прошли валидацию на сервере",
+          errors: errors.array(),
+        });
+      }
+      const { userId, playerId } = req.user;
+      const { oldPassword, newPasswordOne, newPasswordTwo } = req.body;
+      const user = await AuthService.getUserWithId(userId);
+
+      if (!user) {
+        return res.status(409).json({
+          error: "UserNotExists",
+          message: "Пользователь с указанным ID не существует",
+        });
+      }
+
+      const saltRounds = 10;
+      const oldPasswordBody = await bcrypt.hash(oldPassword, saltRounds);
+      const oldPasswordDB = user.password;
+
+      if (oldPasswordBody !== oldPasswordDB) {
+        return res.status(400).json({
+          message: "Указан неверный пароль",
+        });
+      }
+      if (password_1 !== password_2) {
+        return res.status(400).json({
+          message: "Новые пароли не совпадают",
+        });
+      }
+
+      const hashPassword = await bcrypt.hash(newPasswordOne, saltRounds);
+
+      await AuthService.updatePassword(hashPassword, userId);
+      return res.json({
+        code: 0,
+        message: `Пользователь ${name} ${surname} успешно зарегистрирован`,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+        message: "Ошибка сервера при регистрации",
+      });
+    }
+  }
 
   async login(req, res) {
     try {

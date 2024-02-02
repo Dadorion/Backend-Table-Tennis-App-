@@ -52,6 +52,13 @@ class UserService {
 
   //    return updetedPlayer.rows
   // }
+  async updateMyPassword(userId, oldPassword, newPasswordOne, newPasswordTwo) {
+
+     const q = Query.insert('players', ['name', 'surname', 'birthday', 'status', 'city'])
+     const updetedPlayer = await pool.query(q, [name, surname, birthday, status, city, id])
+
+     return updetedPlayer.rows
+  }
   // async delete(id) {
   //    if (!id) { throw new Error('не указан ID') }
 

@@ -55,6 +55,18 @@ class UserController {
          res.status(500).json(e.message)
       }
    }
+   async updatePassword(req, res) {
+      try {
+         const { id } = req.body
+         if (!id) { res.status(400).json({ message: 'We need ID namber.' }) }
+
+         const updetedUser = await UserService.updateMyPassword(userId, oldPassword, newPasswordOne, newPasswordTwo);
+
+         res.status(200).json(updetedUser)
+      } catch (e) {
+         res.status(500).json(e.message)
+      }
+   }
    async delete(req, res) {
       try {
          const { id } = req.params

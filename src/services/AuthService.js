@@ -7,6 +7,12 @@ class AuthService {
     ]);
     return answer.rows[0];
   }
+  async getUserWithId(id) {
+    const answer = await pool.query(`SELECT * FROM users WHERE id = $1`, [
+      id,
+    ]);
+    return answer.rows[0];
+  }
   async getPlayer(id) {
     const answer = await pool.query(
       `SELECT * FROM players WHERE user_id = $1`,
@@ -36,7 +42,7 @@ class AuthService {
       // TODO Написать управление ролями.
       let authRole = null;
       const authRoleDefault = 2; // Назначаем роль user - not admin
-      // Записываем через смежную таблицу для того, чтобы разделить данные и не проверять ее толь когда надо. Расчет на снижение нагрузки на базу данных.
+      // Записываем через смежную таблицу для того, чтобы разделить данные и не проверять ее только когда надо. Расчет на снижение нагрузки на базу данных.
 
       if (!authRole) {
         authRole = authRoleDefault;
@@ -63,6 +69,13 @@ class AuthService {
     const answer = await pool.query(`SELECT * FROM users WHERE id = $1`, [id]);
     return answer.rows[0];
   }
+  async logout(token, expiration) {
+    const answer = await pool.query(
+      "INSERT INTO token_blacklist (token, expiration) VALUES ($1, $2)",
+      [token, expiration]
+    );
+    return answer.rows[0];
+  }
   async me(userId) {
     const answer = await pool.query(
       `
@@ -82,18 +95,18 @@ class AuthService {
     );
     return answer.rows[0];
   }
-  async logout(token, expiration) {
-    const answer = await pool.query(
-      "INSERT INTO token_blacklist (token, expiration) VALUES ($1, $2)",
-      [token, expiration]
-    );
-    return answer.rows[0];
-  }
   async blacklist(token) {
     const answer = await pool.query(
       "SELECT * FROM token_blacklist WHERE token = $1",
       [token]
     );
+    return answer.rows;
+  }
+  async updatePassword(pass, id){
+    const answer = await pool.query(
+      "UPDATE users SET password = $1 WHERE id = $2",
+      [pass, id]
+    )
     return answer.rows;
   }
 }
