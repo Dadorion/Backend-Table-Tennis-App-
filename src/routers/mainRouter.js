@@ -15,7 +15,7 @@ router.use('/users',
    checkUserRoleMiddleware,
    userRouter) // ~ok
 router.use('/matches', authMiddleware, matchRouter) // ~ok
-router.use('/players', authMiddleware, playerRouter) // написать все
+router.use('/players', authMiddleware, playerRouter) // 
 router.use('/profile', authMiddleware, profileRouter) // ~ok
 router.use('/stats', authMiddleware, statsRouter) // ~ok
 

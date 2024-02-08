@@ -15,25 +15,39 @@ class PlayerController {
       res.status(500).json({ error: e.message });
     }
   }
+  async createGhost(req, res) {
+    try {
+      const newPlayer = await PlayerService.createGhost(req.body);
+      const answre = {
+        code: 0,
+        message: newPlayer.rows[0],
+      };
+      res.json(answre);
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }
 
   async getAll(req, res) {
     try {
-      const allPlayersResponse = await PlayerService.getAll();
+      const {page, pageSize, mode, direct } = req.query
+
+      const allPlayersResponse = await PlayerService.getAll(page, pageSize, mode, direct );
       const allPlayers = allPlayersResponse.body;
       const paginationInfo = allPlayersResponse.pagination;
-      console.log(allPlayersResponse);
       if (allPlayers.length < 1) {
         return res.status(204).json("This table is empty");
       }
-
+      
       const allPlayersTop = allPlayers.map((player) => {
         const filteredPlayers = allPlayers.filter(
           (p) => p.city !== player.city
-        );
-        const ratingPlace =
+          );
+          const ratingPlace =
           filteredPlayers.findIndex((p) => p.id === player.id) + 1;
-        return { ...player, ratingPlace };
-      });
+          return { ...player, ratingPlace };
+        });
+        // console.log(allPlayersTop);
 
       res.status(200).json({ pagination: paginationInfo, body: allPlayersTop });
     } catch (e) {
@@ -47,12 +61,15 @@ class PlayerController {
     try {
       const { filter } = req.body;
 
-      
       const allPlayers = await PlayerService.getAllWithFilter(filter);
 
       res.status(200).json(allPlayers);
     } catch (e) {
-      res.status(500).json({ error: { where: "controller > getAllWithFilter", message: e.message } });
+      res
+        .status(500)
+        .json({
+          error: { where: "controller > getAllWithFilter", message: e.message },
+        });
     }
   }
   async getAllPredictive(req, res) {
@@ -67,13 +84,16 @@ class PlayerController {
 
       res.status(200).json(allPlayers);
     } catch (e) {
-      res.status(500).json({ error: { where: "controller > getAllPredictive", message: e.message } });
+      res
+        .status(500)
+        .json({
+          error: { where: "controller > getAllPredictive", message: e.message },
+        });
     }
   }
 
   async getOne(req, res) {
     try {
-      console.log(req);
       const { id } = req.params;
       this.checkId(id);
       const player = await PlayerService.getOne(id);
@@ -84,7 +104,6 @@ class PlayerController {
         res.status(400).json("We have no such player");
       }
     } catch (e) {
-      console.log("Ошибка");
       res.status(500).json({ error: e.message });
     }
   }

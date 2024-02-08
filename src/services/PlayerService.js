@@ -22,7 +22,18 @@ class PlayerService {
 
     return newPlayer;
   }
-  async getAll() {
+  async createGhost({ name, surname }) {
+    const newPlayer = await pool.query(
+      ` INSERT 
+        INTO players (name, surname) 
+        VALUES ($1, $2) RETURNING*;`,
+      [name, surname]
+    );
+
+    return newPlayer;
+  }
+  async getAll(page, pageSize, mode, direct) {
+    const offset = page === 1 ? 0 : 3 * (page - 1);
     const players = await pool.query(
       `SELECT
         p.id,
@@ -30,13 +41,17 @@ class PlayerService {
         p.surname,
         p.photo_path
       FROM players AS p
-      ORDER BY id ASC`
+      ORDER BY ${mode} ${direct}
+      LIMIT ${pageSize}
+      OFFSET ${offset}`
     );
     // names and id
     const ids = players.rows.map((p) => {
       return p.id;
     });
 
+    const totalCount = await pool.query(`SELECT count(*) FROM players`);
+    
     const answerMatches = await pool.query(
       `SELECT
         m.id AS match_id,
@@ -79,11 +94,11 @@ class PlayerService {
         winsPersent: winsPersent,
       };
     });
-    
 
     let result = {
       pagination: {
         playersCount: players_matches.length,
+        totalCount: totalCount.rows[0].count,
       },
 
       body: players_matches,
@@ -91,7 +106,7 @@ class PlayerService {
 
     return result;
   }
-  async getAllWithFilter(filter){
+  async getAllWithFilter(filter) {
     const players = await pool.query(
       `
       SELECT
@@ -105,7 +120,7 @@ class PlayerService {
     `,
       [findName]
     );
-    return players.rows
+    return players.rows;
   }
   async getAllPredictive(findName) {
     const players = await pool.query(

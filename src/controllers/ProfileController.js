@@ -14,7 +14,6 @@ class ProfileController {
         ? res.status(200).json(profile)
         : res.status(400).json("пользователь с таким ID не найден");
     } catch (e) {
-      console.log("Ошибочка: ", e.message);
       res.status(500).json(e.message);
     }
   }
@@ -64,7 +63,6 @@ class ProfileController {
   }
   async uploadPhoto(req, res) {
     try {
-      // console.log("Uploaded File:", req.file);
 
       if (!req.file) {
         return res.status(400).send({ code: 1, message: "No file uploaded" });
@@ -85,7 +83,6 @@ class ProfileController {
 
       res.status(200).send({ code: 0, message: "File uploaded!" });
     } catch (error) {
-      console.error("Error handling file upload:", error);
       res.status(500).send({ code: 1, message: "File upload failed." });
     }
   }
