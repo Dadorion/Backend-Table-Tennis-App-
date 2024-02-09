@@ -38,7 +38,7 @@ class PlayerController {
       if (allPlayers.length < 1) {
         return res.status(204).json("This table is empty");
       }
-      
+
       const allPlayersTop = allPlayers.map((player) => {
         const filteredPlayers = allPlayers.filter(
           (p) => p.city !== player.city
@@ -56,7 +56,6 @@ class PlayerController {
         .json({ error: { where: "controller > getAll", message: e.message } });
     }
   }
-
   async getAllWithFilter(req, res) {
     try {
       const { filter } = req.body;
