@@ -24,8 +24,8 @@ class PlayerService {
   }
   async createGhost({ name, surname }) {
     const newPlayer = await pool.query(
-      ` INSERT 
-        INTO players (name, surname) 
+      ` INSERT
+        INTO players (name, surname)
         VALUES ($1, $2) RETURNING*;`,
       [name, surname]
     );
@@ -51,7 +51,7 @@ class PlayerService {
     });
 
     const totalCount = await pool.query(`SELECT count(*) FROM players`);
-    
+
     const answerMatches = await pool.query(
       `SELECT
         m.id AS match_id,
@@ -71,7 +71,7 @@ class PlayerService {
     const matches = answerMatches.rows.map((match) => {
       return {
         ...match,
-        winer:
+        winner:
           match.fp_score > match.sp_score ? match.author_id : match.player_id,
       };
     });
@@ -84,14 +84,14 @@ class PlayerService {
       let wins = 0;
       for (let i = 0; i < allPlayerMatches.length; i++) {
         const match = allPlayerMatches[i];
-        if (match.player_id === match.winer) wins += 1;
+        if (match.player_id === match.winner) wins += 1;
       }
-      let winsPersent = ((wins / allPlayerMatches.length) * 100).toFixed(2);
-      winsPersent != "NaN" ? winsPersent : (winsPersent = "пока нет побед");
+      let winsPercent = ((wins / allPlayerMatches.length) * 100).toFixed(2);
+      winsPercent != "NaN" ? winsPercent : (winsPercent = "пока нет побед");
 
       return {
         ...p,
-        winsPersent: winsPersent,
+        winsPercent: winsPercent,
       };
     });
 
@@ -160,7 +160,7 @@ class PlayerService {
     const matches = answerMatches.rows.map((match) => {
       return {
         ...match,
-        winer:
+        winner:
           match.fp_score > match.sp_score ? match.author_id : match.player_id,
       };
     });
@@ -173,14 +173,14 @@ class PlayerService {
       let wins = 0;
       for (let i = 0; i < allPlayerMatches.length; i++) {
         const match = allPlayerMatches[i];
-        if (match.player_id === match.winer) wins += 1;
+        if (match.player_id === match.winner) wins += 1;
       }
-      let winsPersent = ((wins / allPlayerMatches.length) * 100).toFixed(2);
-      winsPersent != "NaN" ? winsPersent : (winsPersent = "пока нет побед");
+      let winsPercent = ((wins / allPlayerMatches.length) * 100).toFixed(2);
+      winsPercent != "NaN" ? winsPercent : (winsPercent = "пока нет побед");
 
       return {
         ...p,
-        winsPersent: winsPersent,
+        winsPercent: winsPercent,
       };
     });
 
