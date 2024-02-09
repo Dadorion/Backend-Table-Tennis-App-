@@ -15,8 +15,8 @@
 /build
 
 # dev
-/filesbuilder
-/notes
+/src/filesbuilder
+/src/notes
 /sql
 *.code-workspace
 
