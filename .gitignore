@@ -1,6 +1,7 @@
 # dependencies
 /dataBuilders/secretKeyGeneration.js
 /node_modules
+/.vscode
 /__tests__
 /sql
 /.pnp
