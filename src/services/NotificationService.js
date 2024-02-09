@@ -1,52 +1,76 @@
-import client from '../database.js'
-import Query from '../dataBuilders/queryBuilder.js'
+import client from "../database.js";
+import Query from "../dataBuilders/queryBuilder.js";
 
 class NotificationService {
-   async create(notification) {
-      const { name, surname, birthday, status, city } = notification
+  async create(notification) {
+    const { name, surname, birthday, status, city } = notification;
 
-      const q = Query.insert('players', ['name', 'surname', 'birthday', 'status', 'city'])
-      const newNotification = await client.query(q, [name, surname, birthday, status, city])
+    const q = Query.insert("players", [
+      "name",
+      "surname",
+      "birthday",
+      "status",
+      "city",
+    ]);
+    const newNotification = await client.query(q, [
+      name,
+      surname,
+      birthday,
+      status,
+      city,
+    ]);
 
-      return newNotification
-   }
-   // async getAll() {
-   //    const q = Query.selectAll('players')
-   //    const answer = await client.query(q)
-   //    return answer.rows
-   // }
-   async getAll() {
-      const answer = await client.query('SELECT players.id, name, surname, birthday, status, city, max, min, current FROM players JOIN rating_club ON players.id = rating_club.player_id ORDER BY current DESC')
-      return answer.rows
-   }
-   // async getOne(id) {
-   //    if (!id) { throw new Error('не указан ID') }
+    return newNotification;
+  }
 
-   //    const q = Query.selectID('players')
-   //    const answer = await client.query(q, [id])
-   //    return answer.rows[0]
-   // }
-   async getAllForOnePlayer(id) {
-      if (!id) { throw new Error('не указан ID') }
+  async getAll() {
+    const answer = await client.query(
+      "SELECT players.id, name, surname, birthday, status, city, max, min, current FROM players JOIN rating_club ON players.id = rating_club.player_id ORDER BY current DESC"
+    );
+    return answer.rows;
+  }
 
-      const answer = await client.query('SELECT * FROM notifications WHERE player_id = $1 ORDER BY id DESC LIMIT 5', [id])
-      return answer.rows
-   }
-   async update(notification) {
-      const { name, surname, birthday, status, city, id } = notification
+  async getAllForOnePlayer(id) {
+    if (!id) {
+      throw new Error("не указан ID");
+    }
 
-      const q = Query.insert('players', ['name', 'surname', 'birthday', 'status', 'city'])
-      const updatedNotification = await client.query(q, [name, surname, birthday, status, city, id])
+    const answer = await client.query(
+      "SELECT * FROM notifications WHERE player_id = $1 ORDER BY id DESC LIMIT 5",
+      [id]
+    );
+    return answer.rows;
+  }
+  async update(notification) {
+    const { name, surname, birthday, status, city, id } = notification;
 
-      return updatedNotification.rows
-   }
-   async delete(id) {
-      if (!id) { throw new Error('не указан ID') }
+    const q = Query.insert("players", [
+      "name",
+      "surname",
+      "birthday",
+      "status",
+      "city",
+    ]);
+    const updatedNotification = await client.query(q, [
+      name,
+      surname,
+      birthday,
+      status,
+      city,
+      id,
+    ]);
 
-      const q = Query.selectID('players')
-      const deletedNotification = await client.query(q, [id])
-      return deletedNotification.rows[0]
-   }
+    return updatedNotification.rows;
+  }
+  async delete(id) {
+    if (!id) {
+      throw new Error("не указан ID");
+    }
+
+    const q = Query.selectID("players");
+    const deletedNotification = await client.query(q, [id]);
+    return deletedNotification.rows[0];
+  }
 }
 
-export default new NotificationService()
+export default new NotificationService();

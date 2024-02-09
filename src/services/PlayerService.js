@@ -45,7 +45,7 @@ class PlayerService {
       LIMIT ${pageSize}
       OFFSET ${offset}`
     );
-    // names and id
+
     const ids = players.rows.map((p) => {
       return p.id;
     });
@@ -82,6 +82,7 @@ class PlayerService {
       });
 
       let wins = 0;
+      
       for (let i = 0; i < allPlayerMatches.length; i++) {
         const match = allPlayerMatches[i];
         if (match.player_id === match.winner) wins += 1;

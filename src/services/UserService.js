@@ -3,7 +3,6 @@ import Query from "../dataBuilders/queryBuilder.js";
 
 class UserService {
   async create(user) {
-    console.log(user);
     const { name, surname, birthday, status, city } = user;
 
     const q = Query.insert("players", [
@@ -37,35 +36,25 @@ class UserService {
 
     return result;
   }
-  // async getOne(id) {
-  //    if (!id) { throw new Error('не указан ID') }
-
-  //    const q = Query.selectID('players')
-  //    const answer = await pool.query(q, [id])
-  //    return answer.rows[0]
-  // }
-  // async update(user) {
-  //    const { name, surname, birthday, status, city, id } = user
-
-  //    const q = Query.insert('players', ['name', 'surname', 'birthday', 'status', 'city'])
-  //    const updetedPlayer = await pool.query(q, [name, surname, birthday, status, city, id])
-
-  //    return updetedPlayer.rows
-  // }
   async updateMyPassword(userId, oldPassword, newPasswordOne, newPasswordTwo) {
+    const q = Query.insert("players", [
+      "name",
+      "surname",
+      "birthday",
+      "status",
+      "city",
+    ]);
+    const updatedPlayer = await pool.query(q, [
+      name,
+      surname,
+      birthday,
+      status,
+      city,
+      id,
+    ]);
 
-     const q = Query.insert('players', ['name', 'surname', 'birthday', 'status', 'city'])
-     const updetedPlayer = await pool.query(q, [name, surname, birthday, status, city, id])
-
-     return updetedPlayer.rows
+    return updatedPlayer.rows;
   }
-  // async delete(id) {
-  //    if (!id) { throw new Error('не указан ID') }
-
-  //    const q = Query.selectID('players')
-  //    const deletedPlayer = await pool.query(q, [id])
-  //    return deletedPlayer.rows[0]
-  // }
 }
 
 export default new UserService();

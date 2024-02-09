@@ -4,7 +4,6 @@ import { check } from "express-validator";
 import authMiddleware from "../middleware/authMiddleware.js";
 
 const routerAuth = new Router();
-// TODO что-то надо решить на счет восстановления пароля, если пользователь его забыл
 
 const today = new Date();
 routerAuth.post(
@@ -23,19 +22,18 @@ routerAuth.post(
         max: 10,
       }),
     check("email", "Введите корректный E-mail").trim().isEmail(),
-    check("name", "Имя должно быть длинее 3 и короче 15 символов")
+    check("name", "Имя должно быть длиннее 3 и короче 15 символов")
       .trim()
       .isLength({
         min: 3,
         max: 15,
       }),
-    check("surname", "Фамилия должна быть длинее 3 и короче 20 символов")
+    check("surname", "Фамилия должна быть длиннее 3 и короче 20 символов")
       .trim()
       .isLength({
         min: 3,
         max: 20,
       }),
-    // check('birthday', "Введите корректную дату. Вы должны быть старше 5 лет").trim().isDate().isBefore(today.setFullYear(today.getFullYear() - 5)),
     check(
       "birthday",
       "Введите корректную дату. Вы должны быть старше 5 лет"

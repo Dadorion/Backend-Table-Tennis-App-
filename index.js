@@ -5,9 +5,7 @@ import mainRouter from "./src/routers/mainRouter.js";
 import authRouter from "./src/routers/authRouter.js";
 import getPort from "get-port";
 import cors from "cors";
-// import path from "path";
 
-// const isTest = true
 const isTest = false;
 
 let PORT;
@@ -19,11 +17,11 @@ if (isTest) {
 
 const app = express();
 app.use(express.json());
-app.use('/uploads', express.static('uploads'));
+app.use("/uploads", express.static("uploads"));
 app.use(
   cors({
-    origin: "http://localhost:3000", // Замените на адрес вашего фронтенда
-    credentials: true, // Если вы работаете с cookies или аутентификацией
+    origin: "http://localhost:3000",
+    credentials: true,
   })
 );
 
@@ -41,7 +39,7 @@ async function startApp() {
       console.log("SERVER WORK ON PORT " + PORT);
     });
   } catch (e) {
-    console.log(e.message);
+    console.error(e.message);
   }
 }
 

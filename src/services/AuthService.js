@@ -8,9 +8,7 @@ class AuthService {
     return answer.rows[0];
   }
   async getUserWithId(id) {
-    const answer = await pool.query(`SELECT * FROM users WHERE id = $1`, [
-      id,
-    ]);
+    const answer = await pool.query(`SELECT * FROM users WHERE id = $1`, [id]);
     return answer.rows[0];
   }
   async getPlayer(id) {
@@ -79,7 +77,7 @@ class AuthService {
   async me(userId) {
     const answer = await pool.query(
       `
-        SELECT 
+        SELECT
           u.id AS user_id,
           p.name,
           p.surname,
@@ -102,11 +100,11 @@ class AuthService {
     );
     return answer.rows;
   }
-  async updatePassword(pass, id){
+  async updatePassword(pass, id) {
     const answer = await pool.query(
       "UPDATE users SET password = $1 WHERE id = $2",
       [pass, id]
-    )
+    );
     return answer.rows;
   }
 }

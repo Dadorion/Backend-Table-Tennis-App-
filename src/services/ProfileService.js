@@ -1,8 +1,8 @@
 import pool from "../../database.js";
 import {
   checkMatches,
-  winsPersent,
-} from "../dataBuilders/calculateWinsPersent.js";
+  winsPercent,
+} from "../dataBuilders/calculateWinsPercent.js";
 
 class ProfileService {
   async getOne(id) {
@@ -18,7 +18,7 @@ class ProfileService {
     if (profileIsExist.rows.length == 0) return;
 
     const answerInfo = await pool.query(
-      "SELECT players.id as id, players.name, surname, status, cities.name as city,EXTRACT(YEAR FROM birthday) AS b_Year,base,forhand_pad,backhand_pad FROM players JOIN cities ON cities.id = players.city_id WHERE players.id = $1 ",
+      "SELECT players.id as id, players.name, surname, status, cities.name as city,EXTRACT(YEAR FROM birthday) AS b_Year,base,forehand_pad,backhand_pad FROM players JOIN cities ON cities.id = players.city_id WHERE players.id = $1 ",
       [id]
     );
 
@@ -35,17 +35,17 @@ class ProfileService {
     for (let i = 0; i < matches.length; i++) {
       if (matches[i]) wins += 1;
     }
-    let winsPersent = ((wins / matches.length) * 100).toFixed(2);
-    winsPersent != "NaN" ? winsPersent : (winsPersent = "пока нет побед");
+    let winsPercent = ((wins / matches.length) * 100).toFixed(2);
+    winsPercent != "NaN" ? winsPercent : (winsPercent = "пока нет побед");
 
     let grade = "не оценен";
-    if (winsPersent > 80) {
+    if (winsPercent > 80) {
       grade = "тотальный";
-    } else if (winsPersent > 60) {
+    } else if (winsPercent > 60) {
       grade = "высокий";
-    } else if (winsPersent > 40) {
+    } else if (winsPercent > 40) {
       grade = "нормальный";
-    } else if (winsPersent <= 40) {
+    } else if (winsPercent <= 40) {
       grade = "низкий";
     }
 
@@ -56,11 +56,11 @@ class ProfileService {
       status: answerInfo.rows[0].status,
       city: answerInfo.rows[0].city,
       b_year: answerInfo.rows[0].b_year,
-      winsPersent,
+      winsPercent,
       grade,
       racket: {
         base: answerInfo.rows[0].base,
-        forhand_pad: answerInfo.rows[0].forhand_pad,
+        forehand_pad: answerInfo.rows[0].forehand_pad,
         backhand_pad: answerInfo.rows[0].backhand_pad,
       },
     };
@@ -80,7 +80,7 @@ class ProfileService {
          region,
          birthday,
          base,
-         forhand_pad,
+         forehand_pad,
          backhand_pad,
          photo_path
       FROM players AS p
@@ -93,7 +93,7 @@ class ProfileService {
         SELECT
           m.id,
           m.author_id,
-          p.id AS player_id, 
+          p.id AS player_id,
           (SELECT pm4.player_id
             FROM
               players_matches AS pm4
@@ -105,13 +105,13 @@ class ProfileService {
                       ELSE pm4.player_id = m.author_id
                   END
               )
-          ) AS opponent_id, 
+          ) AS opponent_id,
           (SELECT name
             FROM players AS p2
             WHERE
               p2.id = m.author_id
           ) AS author,
-          p.name AS player, 
+          p.name AS player,
           (SELECT name
             FROM
               players AS p_opponent
@@ -147,7 +147,7 @@ class ProfileService {
     );
 
     const checkedMatches = checkMatches(answerMatches.rows);
-    const percentOfWin = winsPersent(checkedMatches);
+    const percentOfWin = winsPercent(checkedMatches);
 
     return { ...answerInfo.rows[0], percentOfWin };
   }
@@ -156,12 +156,12 @@ class ProfileService {
       throw new Error("не указан ID");
     }
 
-    const { name, surname, base, forhand_pad, backhand_pad } = newProfileData;
+    const { name, surname, base, forehand_pad, backhand_pad } = newProfileData;
 
     const answerInfo = await pool.query(
-      `UPDATE players SET (name, surname, base, forhand_pad, backhand_pad) = ($2, $3, $4, $5, $6)
+      `UPDATE players SET (name, surname, base, forehand_pad, backhand_pad) = ($2, $3, $4, $5, $6)
     WHERE id = $1 RETURNING *`,
-      [id, name, surname, base, forhand_pad, backhand_pad]
+      [id, name, surname, base, forehand_pad, backhand_pad]
     );
 
     return { code: 0, ...answerInfo.rows[0] };
