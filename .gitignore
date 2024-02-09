@@ -15,6 +15,7 @@
 # dev
 /filesbuilder
 /notes
+/sql
 *.code-workspace
 
 # misc
