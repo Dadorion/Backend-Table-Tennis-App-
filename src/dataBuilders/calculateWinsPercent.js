@@ -45,7 +45,7 @@ export function checkMatches(answerMatches) {
    return matchesWithWinner
 }
 
-export function winsPersent(matches) {
+export function winsPercent(matches) {
    const totalMatches = matches.length
    const totalWins = matches.filter((match) => match.isWinner).length
    const winPercentage = (totalWins / totalMatches) * 100
